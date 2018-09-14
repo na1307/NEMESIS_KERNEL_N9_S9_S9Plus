@@ -28,21 +28,57 @@ mount /data
 
 ui_print " - Installing FlashKernel"
 
-if grep -q N960 BLmodel; then
-	cat crownlte-eur.img > /dev/block/platform/11120000.ufs/by-name/BOOT
-	ui_print " - Flashing N960X kernel"
+if grep -q G965 BLmodel; then
+	cat star2lte-eur.img > /dev/block/platform/11120000.ufs/by-name/BOOT
+	prop.default_g965f
+	ui_print " - Flashing G965X kernel"
+else if grep -q G960 BLmodel; then
+	cat starlte-eur.img > /dev/block/platform/11120000.ufs/by-name/BOOT
+	ui_print " - Flashing G960X kernel"
 else
 	echo "Not a supported model. Dont flash any kernel!"
 	ui_print " - Model not support, no kernel flashed"
 	exit
 fi;
+fi;
+
+ui_print " - removing critical mcRegistry"
+
+rm -f /vendor/app/mcRegistry/ffffffffd00000000000000000000062.tlbin
 
 ui_print " - removing Rcl and SecurityLogAgent App"
 
 rm -rf /system/priv-app/Rlc
 rm -rf /system/app/SecurityLogAgent
 
-sed -i '/ro.debuggable/a ro.config.tima=0\nro.security.vaultkeeper.feature=0\nwlan.wfd.hdcp=disable' /system/etc/prop.default
+ui_print " - removing old prop.default"
+
+rm -f /system/etc/prop.default
+rm -f /vendor/lib/libsecure_storage.so
+rm -f /vendor/lib64/libsecure_storage.so
+
+cd
+cd /tmp/tkkg1994
+
+if grep -q G965 BLmodel; then
+	ui_print " - Flashing modded prop.default"
+	mv -f system/etc/prop.default_g965f /system/etc/prop.default
+else if grep -q G960 BLmodel; then
+	ui_print " - Flashing modded prop.default"
+	mv -f system/etc/prop.default_g960f /system/etc/prop.default
+else
+	ui_print " - Model not support, no kernel flashed"
+	exit
+fi;
+fi;
+mv -f vendor/lib/libsecure_storage.so /vendor/lib/libsecure_storage.so
+mv -f vendor/lib64/libsecure_storage.so /vendor/lib64/libsecure_storage.so
+
+ui_print " - setting permissions"
+
+chmod 0644 /system/etc/prop.default
+chmod 0644 /vendor/lib/libsecure_storage.so
+chmod 0644 /vendor/lib64/libsecure_storage.so
 
 ui_print " - unmounting partition /data"
 umount /data > /dev/null 2>&1
