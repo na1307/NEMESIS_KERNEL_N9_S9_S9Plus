@@ -1,7 +1,7 @@
 #!/bin/bash
 # GrifoDev script
 
-export MODEL=starlte
+export MODEL=crownlte
 export VARIANT=eur
 export ARCH=arm64
 export BUILD_CROSS_COMPILE=/home/gaet/Android/Toolchain/gcc-linaro-7.3.1/bin/aarch64-linux-gnu-
