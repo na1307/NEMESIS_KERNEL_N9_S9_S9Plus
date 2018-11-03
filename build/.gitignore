@@ -1,0 +1,4 @@
+*.img
+/META-INF/
+/system/
+/vendor/
