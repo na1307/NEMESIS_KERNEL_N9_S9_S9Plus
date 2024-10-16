@@ -38,14 +38,6 @@ Module.symvers
 *.dwo
 *.su
 *.c.[012]*.*
-build.log
-/arch/arm64/configs/exynos9810-crownlte_defconfigstock
-/arch/arm64/boot/dtb/
-/drivers/gator_5.27/gator_src_md5.h
-/firmware/five/ffffffff000000000000000000000072.tlbin
-/scripts/rkp_cfp/common.pyc
-/scripts/rkp_cfp/tmp/
-
 
 #
 # Top-level generic files
