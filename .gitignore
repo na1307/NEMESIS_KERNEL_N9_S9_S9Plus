@@ -38,6 +38,8 @@ Module.symvers
 *.dwo
 *.su
 *.c.[012]*.*
+build.log
+/drivers/gator_5.27/gator_src_md5.h
 
 #
 # Top-level generic files
