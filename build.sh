@@ -2,7 +2,7 @@
 # GrifoDev script
 
 export MODEL=starlte
-export VARIANT=eur
+export VARIANT=kor
 export ARCH=arm64
 export BUILD_CROSS_COMPILE=aarch64-linux-gnu-
 export BUILD_JOB_NUMBER=30
@@ -22,6 +22,9 @@ starlte)
 	case $VARIANT in
 	can|duos|eur|xx)
 		KERNEL_DEFCONFIG=exynos9810-starlte_defconfig
+		;;
+	kor)
+		KERNEL_DEFCONFIG=exynos9810-starlteks_defconfig
 		;;
 	*)
 		echo "Unknown variant: $VARIANT"
@@ -84,6 +87,11 @@ FUNC_BUILD_DTIMAGE_TARGET()
 			DTSFILES="exynos9810-starlte_eur_open_16 exynos9810-starlte_eur_open_17
 					exynos9810-starlte_eur_open_18 exynos9810-starlte_eur_open_20
 					exynos9810-starlte_eur_open_23 exynos9810-starlte_eur_open_26"
+			;;
+		kor)
+			DTSFILES="exynos9810-starlte_kor_16 exynos9810-starlte_kor_17
+					exynos9810-starlte_kor_18 exynos9810-starlte_kor_20
+					exynos9810-starlte_kor_23 exynos9810-starlte_kor_26"
 			;;
 		*)
 			echo "Unknown variant: $VARIANT"
@@ -184,7 +192,7 @@ FUNC_BUILD_RAMDISK()
 	case $MODEL in
 	starlte)
 		case $VARIANT in
-		can|duos|eur|xx)
+		can|duos|eur|xx|kor)
 			rm -f $RDIR/ramdisk/SM-G960F/split_img/boot.img-zImage
 			rm -f $RDIR/ramdisk/SM-G960F/split_img/boot.img-dtb
 			mv -f $RDIR/arch/$ARCH/boot/boot.img-zImage $RDIR/ramdisk/SM-G960F/split_img/boot.img-zImage
@@ -247,7 +255,7 @@ FUNC_BUILD_ZIP()
 	case $MODEL in
 	starlte)
 		case $VARIANT in
-		can|duos|eur|xx)
+		can|duos|eur|xx|kor)
 			mv -f $RDIR/ramdisk/SM-G960F/image-new.img $RDIR/build/$MODEL-$VARIANT.img
 			;;
 		*)
