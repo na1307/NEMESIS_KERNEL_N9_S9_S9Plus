@@ -192,12 +192,21 @@ FUNC_BUILD_RAMDISK()
 	case $MODEL in
 	starlte)
 		case $VARIANT in
-		can|duos|eur|xx|kor)
+		can|duos|eur|xx)
 			rm -f $RDIR/ramdisk/SM-G960F/split_img/boot.img-zImage
 			rm -f $RDIR/ramdisk/SM-G960F/split_img/boot.img-dtb
 			mv -f $RDIR/arch/$ARCH/boot/boot.img-zImage $RDIR/ramdisk/SM-G960F/split_img/boot.img-zImage
 			mv -f $RDIR/arch/$ARCH/boot/boot.img-dtb $RDIR/ramdisk/SM-G960F/split_img/boot.img-dtb
 			cd $RDIR/ramdisk/SM-G960F
+			./repackimg.sh --nosudo
+			echo SEANDROIDENFORCE >> image-new.img
+			;;
+		kor)
+			rm -f $RDIR/ramdisk/SM-G960N/split_img/boot.img-zImage
+			rm -f $RDIR/ramdisk/SM-G960N/split_img/boot.img-dtb
+			mv -f $RDIR/arch/$ARCH/boot/boot.img-zImage $RDIR/ramdisk/SM-G960N/split_img/boot.img-zImage
+			mv -f $RDIR/arch/$ARCH/boot/boot.img-dtb $RDIR/ramdisk/SM-G960N/split_img/boot.img-dtb
+			cd $RDIR/ramdisk/SM-G960N
 			./repackimg.sh --nosudo
 			echo SEANDROIDENFORCE >> image-new.img
 			;;
@@ -255,8 +264,11 @@ FUNC_BUILD_ZIP()
 	case $MODEL in
 	starlte)
 		case $VARIANT in
-		can|duos|eur|xx|kor)
+		can|duos|eur|xx)
 			mv -f $RDIR/ramdisk/SM-G960F/image-new.img $RDIR/build/$MODEL-$VARIANT.img
+			;;
+		kor)
+			mv -f $RDIR/ramdisk/SM-G960N/image-new.img $RDIR/build/$MODEL-$VARIANT.img
 			;;
 		*)
 			echo "Unknown variant: $VARIANT"
