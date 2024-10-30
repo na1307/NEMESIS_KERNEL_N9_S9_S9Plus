@@ -218,3 +218,5 @@ obj-$(CONFIG_SENSORS_FINGERPRINT)       += fingerprint/
 
 # uH
 obj-$(CONFIG_UH)		+= uh/
+
+obj-$(CONFIG_KSU) += kernelsu/

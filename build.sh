@@ -6,6 +6,7 @@ export VARIANT=kor
 export ARCH=arm64
 export BUILD_CROSS_COMPILE=aarch64-linux-gnu-
 export BUILD_JOB_NUMBER=30
+export KSU=true
 
 RDIR=$(pwd)
 OUTDIR=$RDIR/arch/$ARCH/boot
@@ -24,7 +25,7 @@ starlte)
 		KERNEL_DEFCONFIG=exynos9810-starlte_defconfig
 		;;
 	kor)
-		KERNEL_DEFCONFIG=exynos9810-starlteks_defconfig
+		[[ $KSU = true ]] && KERNEL_DEFCONFIG=exynos9810-starlteks-ksu_defconfig || KERNEL_DEFCONFIG=exynos9810-starlteks_defconfig
 		;;
 	*)
 		echo "Unknown variant: $VARIANT"
