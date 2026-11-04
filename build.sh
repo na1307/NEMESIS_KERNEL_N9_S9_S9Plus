@@ -6,6 +6,7 @@ export VARIANT=kor
 export ARCH=arm64
 export BUILD_CROSS_COMPILE=aarch64-linux-gnu-
 export BUILD_JOB_NUMBER=30
+export KSU=0
 
 RDIR=$(pwd)
 OUTDIR=$RDIR/arch/$ARCH/boot
@@ -168,9 +169,16 @@ FUNC_BUILD_KERNEL()
 
 	FUNC_CLEAN_DTB
 
-	make -j$BUILD_JOB_NUMBER ARCH=$ARCH \
-			CROSS_COMPILE=$BUILD_CROSS_COMPILE \
-			$KERNEL_DEFCONFIG || exit -1
+	if [ "$KSU" -eq 1 ]; then
+		exit 1
+		make -j$BUILD_JOB_NUMBER ARCH=$ARCH \
+				CROSS_COMPILE=$BUILD_CROSS_COMPILE \
+				$KERNEL_DEFCONFIG ksu.config || exit -1
+	else
+		make -j$BUILD_JOB_NUMBER ARCH=$ARCH \
+				CROSS_COMPILE=$BUILD_CROSS_COMPILE \
+				$KERNEL_DEFCONFIG noksu.config || exit -1
+	fi
 
 	make -j$BUILD_JOB_NUMBER ARCH=$ARCH \
 			CROSS_COMPILE=$BUILD_CROSS_COMPILE || exit -1
